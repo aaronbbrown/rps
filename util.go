@@ -18,7 +18,7 @@ func GetEnvNDefault(key string, defValue int) (n int, err error) {
 			return 0, fmt.Errorf("%s must be an integer.  Got %s", key, s)
 		}
 	} else {
-		n = 10
+		n = defValue
 	}
 	return n, nil
 }
