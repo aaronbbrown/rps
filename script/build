@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -ex
+GODIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+. "$GODIR/script/test"
+go build -o ropasc

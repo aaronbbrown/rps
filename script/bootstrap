@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+OS=$(uname -s)
+if [[ $OS != "Darwin" ]]; then
+  echo "Unsupported OS $OS"
+  exit 1
+fi
+
+brew bundle
+glide up
+glide install

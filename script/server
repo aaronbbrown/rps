@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -ex
+
+: ${PORT:="5555"}
+: ${GAMES:="10"}
+: ${STRATEGY:="random"}
+
+docker run --env PORT="$PORT" \
+           --env GAMES="$GAMES" \
+           --env MODE=server \
+           --env STRATEGY="$STRATEGY" \
+           --publish "$PORT:$PORT" rockpaperscissors ./ropasc

@@ -1,0 +1,28 @@
+FROM golang
+
+ARG zmq_url=https://github.com/zeromq/zeromq4-1/releases/download/v4.1.5/zeromq-4.1.5.tar.gz
+ARG zmq_sha256=04aac57f081ffa3a2ee5ed04887be9e205df3a7ddade0027460b8042432bdbcf
+
+# install add-apt-repository
+RUN apt-get update && \
+    apt-get -y install software-properties-common
+
+# download and install glide
+RUN add-apt-repository -y ppa:masterminds/glide && \
+    sed -i 's/jessie/xenial/g' /etc/apt/sources.list.d/masterminds-glide-jessie.list && \
+    apt-get update && apt-get -y install glide pkg-config
+
+# download and install zmq4
+WORKDIR /tmp
+RUN curl -fsSL "$zmq_url" -o /tmp/zeromq-4.1.5.tar.gz \
+    && echo "$zmq_sha256 zeromq-4.1.5.tar.gz" | sha256sum -c - \
+    && tar -xzf /tmp/zeromq-4.1.5.tar.gz
+WORKDIR /tmp/zeromq-4.1.5
+RUN ./configure && make && make install && ldconfig
+
+# test and build our app
+WORKDIR /go/src/github.com/aaronbbrown/rps
+COPY . ./
+RUN glide install
+
+RUN ./script/build

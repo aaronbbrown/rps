@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -ex
+
+: ${ADDRESS="tcp://localhost:5555"}
+: ${STRATEGY="random"}
+
+docker run --env ADDRESS="$ADDRESS" \
+           --env MODE=client \
+           --env STRATEGY="$STRATEGY" \
+           rockpaperscissors ./ropasc

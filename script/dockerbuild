@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+GODIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+docker build -f "$GODIR/Dockerfile.build" "$GODIR" -t rockpaperscissors
